@@ -33,7 +33,9 @@
                     </GridView>
                 </ListView.View>
             </ListView>
+            
             <!--Поля для ввода значений-->
+            
             <TextBlock Text="Работа с БД" FontSize="25" Grid.Column="3" VerticalAlignment="Top" HorizontalAlignment="Center"/>
             <TextBlock Text="Фамилия" FontSize="25" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="15,55,0,0"/>
             <TextBlock Text="Имя" FontSize="25" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="43,102,0,0"/>
@@ -49,6 +51,7 @@
             <ComboBox x:Name="Faculityes" Grid.Column="2" Width="183" Height="40" HorizontalAlignment="Left" Margin="131,135,0,15" Grid.Row="1"/>
 
             <!--Кнопки-->
+            
             <Button Content="Добавить" Grid.Column="2" Grid.Row="2" VerticalAlignment="Top" Height="35" Margin="66,8,70,0" Click="Button_Click"/>
             <Button Content="Обновить" Grid.Column="2" Grid.Row="2" VerticalAlignment="Top" Height="35" Margin="66,62,71,0" Click="Button_Click_1"/>
             <Button Content="Удалить" Grid.Column="2" Grid.Row="2" VerticalAlignment="Top" Height="35" Margin="66,116,70,0" Click="Button_Click_2"/>

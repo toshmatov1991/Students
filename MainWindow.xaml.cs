@@ -21,17 +21,23 @@ namespace Students
     {
         public MainWindow()
         {
+            //Старт программы
             InitializeComponent();
+
+            //Метод для обновления нашего списка
             UpdateList();
+
+            //Метод для заполнения ComboBox Группы
             GoToGroupBox();
+
+            //Метод для заполнения ComboBox Факультеты
             GoToFaculity();
+
+            MessageBox.Show("Для выборки данных из таблицы, сделайте двойной клик по любой строке из таблицы ;)");
         }
 
         //Глобальная переменная для хранения id выбранного студента
         int temp;
-
-
-
 
         //Метод для заполнения ComboBox Группы
         //https://metanit.com/sharp/wpf/5.8.php
@@ -245,6 +251,7 @@ namespace Students
         //При нажатии на кнопку Удалить
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
+
             //Удалить студента
             //https://professorweb.ru/my/entity-framework/6/level3/3_7.php
 
@@ -275,11 +282,22 @@ namespace Students
 
         }
 
+
+
+        //Событие двойной клик на нашем ListView
         private void GoToTextBoxes(object sender, MouseButtonEventArgs e)
         {
             //Получить студентика по двойному клику мыши
+            //Создаем строку для сохранения id выбранно студента
             string _id = "";
+
+            //При двойном клике, все данные выбранной строки присвоим в нашу переменную str
+            // str = "{ id = 13, firstn = Петров, name = Family, lastn = авыа, birth = 10.10.2010, gr = 123, fac = Исторический }"
+
+            //Получили такую строку, нам нужно из нее получить только Id, соответсвенно запустим цикл и будем приваивать в переменную _id только цифры до первой запятой, после остановим цикл;
+
             var str = listviewCards.SelectedItem.ToString();
+           
             //Получаем id пользователя
             for (int i = 0; i < str.Length; i++)
             {
@@ -293,15 +311,19 @@ namespace Students
                 }
             }
 
+            //Теперь _id содержит id выбранного студента
+
+            //Пишем многотабличный запрос
             using(StudContext db = new())
             {
                 var query = from stud in db.Students
                             join grup in db.Gruppas on stud.FkIdGroup equals grup.Id
                             join fakul in db.Fakulities on stud.FkIdFakulity equals fakul.Id
+                            //Получим студента где его id равен выбранному студенту
                             where stud.Id == Convert.ToInt64(_id)
                             select new
                             {
-                                stud.Id,
+                                id = stud.Id,
                                 firstn = stud.Firstname,
                                 name = stud.Name,
                                 lastn = stud.Lastname,
@@ -309,16 +331,19 @@ namespace Students
                                 gr = grup.NumberGroup,
                                 fac = fakul.NameFaculity
                             };
+
+                
+                //Перебирем наш запрос и присвоим его данные в наши поля
+                //Так как в шаем запросе всего один студент, цикл будет проходит один раз
                 foreach (var item in query)
                 {
-                    temp = (int)item.Id;
+                    temp = (int)item.id;
                     Family.Text = item.firstn;
                     Name.Text = item.name;
                     Lastname.Text = item.lastn;
                     Birth.Text = item.birth;
                     Groups.Text = item.gr.ToString();
                     Faculityes.Text = item.fac;
-                    break;
                 }
 
             }
