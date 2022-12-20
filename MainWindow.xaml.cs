@@ -174,6 +174,8 @@ namespace Students
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             //Удалить студента
+            //https://professorweb.ru/my/entity-framework/6/level3/3_7.php
+
 
             using (StudContext db = new())
             {
